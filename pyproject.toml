@@ -16,7 +16,47 @@ uvicorn = "^0.27.1"
 gunicorn = "^21.2.0"
 black = "^24.2.0"
 flake8 = "^7.0.0"
+flake8-alphabetize = "^0.0.21"
+flake8-comprehensions = "^3.14.0"
+flake8-quotes = "^3.4.0"
+pep8-naming = "^0.13.3"
+flake8-import-order = "^0.18.2"
 
+
+[tool.poetry.group.lint.dependencies]
+black = "^24.2.0"
+flake8 = "^7.0.0"
+flake8-alphabetize = "^0.0.21"
+flake8-comprehensions = "^3.14.0"
+flake8-quotes = "^3.4.0"
+pep8-naming = "^0.13.3"
+flake8-import-order = "^0.18.2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.2.0"
+flake8 = "^7.0.0"
+flake8-alphabetize = "^0.0.21"
+flake8-comprehensions = "^3.14.0"
+flake8-quotes = "^3.4.0"
+pep8-naming = "^0.13.3"
+flake8-import-order = "^0.18.2"
+fastapi = "^0.109.2"
+sqlalchemy = "^2.0.27"
+asyncpg = "^0.29.0"
+alembic = "^1.13.1"
+python-dotenv = "^1.0.1"
+uvicorn = "^0.27.1"
+gunicorn = "^21.2.0"
+
+
+[tool.poetry.group.prod.dependencies]
+fastapi = "^0.109.2"
+sqlalchemy = "^2.0.27"
+asyncpg = "^0.29.0"
+alembic = "^1.13.1"
+python-dotenv = "^1.0.1"
+gunicorn = "^21.2.0"
 
 [build-system]
 requires = ["poetry-core"]
