@@ -23,5 +23,5 @@ jobs:
       run: poetry run flake8 --verbose --config .flake8 src/
 
     - name: black
-      run: poetry run black src/ --check
+      run: poetry run black src/ --check --line-length 79
       
