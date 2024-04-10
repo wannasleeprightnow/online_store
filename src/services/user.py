@@ -10,5 +10,4 @@ class UserService:
     async def get_all_users(self) -> list[UserModel]:
         return await self.user_repository.get_all()
 
-    async def is_user_exists(self, user: UserRegister) -> bool:
-        ...
+    async def is_user_exists(self, user: UserRegister) -> bool: ...

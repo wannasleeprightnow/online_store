@@ -9,12 +9,10 @@ from database.database import async_session_maker, Base
 class AbstractRepository(ABC):
 
     @abstractmethod
-    async def get_all(self) -> Iterable:
-        ...
+    async def get_all(self) -> Iterable: ...
 
     @abstractmethod
-    async def insert_one(self, _) -> Base:
-        ...
+    async def insert_one(self, _) -> Base: ...
 
 
 class Repository(AbstractRepository):

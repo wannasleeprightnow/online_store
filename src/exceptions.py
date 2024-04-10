@@ -57,3 +57,27 @@ class TokenExpired(HTTPException):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token has expired.",
         )
+
+
+class CredentialsException(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate creadentials.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
+class NotActiveUser(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN, detail="User is not active."
+        )
+
+
+class NotSuperuser(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not enought privileges",
+        )

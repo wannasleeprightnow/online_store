@@ -1,4 +1,4 @@
 [flake8]
 import-order-style = google
-ignore=Q000,AZ100,AZ200,I100,I202
+ignore=Q000,AZ100,AZ200,I100,I202,N803,E704
 enable-extensions=flake8-alphabetize,flake8-comprehensions,flake8-quotes,pep8-naming,flake8-import-order

@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Optional
 from uuid import UUID, uuid4
 
+
 from exceptions import (
     InvalidToken,
     NotValidName,
@@ -17,7 +18,11 @@ from repositories.user import UserRepository
 from schemas.token import Token
 from schemas.user import UserRegister
 from settings import ValidatorSettings
-from utils.auth_utils import hash_password, is_valid_password, jwt_encode
+from utils.auth_utils import (
+    hash_password,
+    is_valid_password,
+    jwt_encode,
+)
 
 
 class AuthService:
@@ -76,7 +81,9 @@ class AuthService:
         )
 
     async def refresh_token(self, refresh_token: str) -> Optional[Token]:
-        print(refresh_token)
+        if refresh_token is None:
+            raise InvalidToken
+
         refresh_session = (
             await self.refresh_session_repository.get_session_by_token(
                 UUID(refresh_token.strip())
@@ -109,3 +116,19 @@ class AuthService:
         return Token(
             access_token=access_token, refresh_token=refresh_token.token
         )
+
+    async def logout(self, refresh_token: UUID) -> None:
+        if await self.refresh_session_repository.get_session_by_token(
+            refresh_token
+        ):
+            await self.refresh_session_repository.delete_session_by_token(
+                refresh_token
+            )
+
+    async def abort_all_sessions(self, user_id: UUID):
+        if await self.refresh_session_repository.get_session_by_user_id(
+            user_id
+        ):
+            await self.refresh_session_repository.delete_session_by_token(
+                user_id
+            )

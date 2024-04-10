@@ -3,10 +3,12 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from api.dependencies import auth_service
 from exceptions import InvalidCredentials
+from models.user import UserModel
 from settings import AuthJWTSettings
 from services.auth import AuthService
 from schemas.token import Token
 from schemas.user import UserBase, UserRegister
+from api.dependencies import get_current_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -67,3 +69,27 @@ async def refresh(
         httponly=True,
     )
     return new_token
+
+
+@router.post("/logout", response_model=dict)
+async def logout(
+    request: Request,
+    response: Response,
+    service: AuthService = Depends(auth_service),
+):
+    await service.logout(request.cookies.get("refresh_token"))
+    response.delete_cookie("access_token")
+    response.delete_cookie("refresh_token")
+    return {"message": "Logged out successfully."}
+
+
+@router.post("/abort", response_model=dict)
+async def aoort_all_sessions(
+    response: Response,
+    service: AuthService = Depends(auth_service),
+    user: UserModel = Depends(get_current_user),
+):
+    await service.abort_all_sessions(user.id)
+    response.delete_cookie("access_token")
+    response.delete_cookie("refresh_token")
+    return {"message": "Abort all session successfully."}

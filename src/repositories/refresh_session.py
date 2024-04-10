@@ -40,3 +40,23 @@ class RefreshSessionRepository(Repository):
             stmt = delete(self.model).where(self.model.id == id)
             await session.execute(stmt)
             await session.commit()
+
+    async def delete_session_by_token(self, token: UUID) -> None:
+        async with async_session_maker() as session:
+            stmt = delete(self.model).where(self.model.token == token)
+            await session.execute(stmt)
+            await session.commit()
+
+    async def delete_all_sessions_by_user_id(self, user_id: UUID) -> None:
+        async with async_session_maker() as session:
+            stmt = delete(self.model).where(self.model.user_id == user_id)
+            await session.execute(stmt)
+            await session.commit()
+
+    async def get_session_by_user_id(
+        self, user_id: UUID
+    ) -> Optional[list[RefreshSessionModel]]:
+        async with async_session_maker() as session:
+            stmt = select(self.model).where(self.model.user_id == user_id)
+            result = await session.execute(stmt)
+            return result.scalars().all()

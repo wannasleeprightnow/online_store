@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from os import environ
 import re
 from pathlib import Path
-from typing import Optional
 
 from dotenv import load_dotenv
 
@@ -12,11 +11,11 @@ load_dotenv()
 
 @dataclass
 class PostgresDatabaseSettings:
-    DATABASE_NAME: Optional[str] = environ.get("POSTGRES_NAME")
-    HOST: Optional[str] = environ.get("POSTGRES_HOST")
-    PORT: Optional[str] = environ.get("POSTGRES_PORT")
-    USER: Optional[str] = environ.get("POSTGRES_USER")
-    PASSWORD: Optional[str] = environ.get("POSTGRES_PASSWORD")
+    DATABASE_NAME: str = environ.get("POSTGRES_NAME")
+    HOST: str = environ.get("POSTGRES_HOST")
+    PORT: str = environ.get("POSTGRES_PORT")
+    USER: str = environ.get("POSTGRES_USER")
+    PASSWORD: str = environ.get("POSTGRES_PASSWORD")
     DSN: str = (
         f"postgresql+asyncpg://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE_NAME}"
     )
